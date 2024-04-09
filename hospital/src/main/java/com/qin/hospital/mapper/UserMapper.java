@@ -1,5 +1,6 @@
 package com.qin.hospital.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qin.hospital.entity.User;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * @author WanYue
  */
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     /**
      * 根据查询条件返回数据
      *

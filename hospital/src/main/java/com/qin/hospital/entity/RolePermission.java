@@ -1,8 +1,6 @@
 package com.qin.hospital.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +25,8 @@ public class RolePermission implements Serializable {
     /**
      * 角色权限关联表id
      */
-    private String id;
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
     /**
      * 角色id
      */
