@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qin.hospital.mapper.UserMapper">
+
+    <resultMap type="com.qin.hospital.entity.User" id="UserMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userName" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="enabledLogin" column="enabledLogin" jdbcType="VARCHAR"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="createdAt" jdbcType="TIMESTAMP"/>
+        <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+        <result property="modifiedAt" column="modifiedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+<select id="getUserList" parameterType="com.qin.hospital.entity.User" resultMap="UserMap">
+    SELECT * FROM user
+    <where>
+        <if test="id != null and id != ''">
+            id = #{id} AND
+        </if>
+        <if test="userName != null and userName != ''">
+            username like concat('%',#{userName},'%') AND
+        </if>
+        <if test="sex != null and sex != ''">
+            sex = #{sex} AND
+        </if>
+        <if test="age != null and age != ''">
+            age = #{age} AND
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email} AND
+        </if>
+        <if test="enabledLogin != null and enabledLogin != ''">
+            enabledLogin = #{enabledLogin} AND
+        </if>
+    </where>
+</select>
+</mapper>
+

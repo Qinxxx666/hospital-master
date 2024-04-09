@@ -1,8 +1,12 @@
 package com.qin.hospital.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -13,9 +17,11 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-04-08 15:29:13
  */
+@Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName(value = "user")
 public class User implements Serializable {
     private static final long serialVersionUID = -22529841091740030L;
     /**
@@ -25,7 +31,8 @@ public class User implements Serializable {
     /**
      * 用户名
      */
-    private String username;
+    @TableField(value = "username")
+    private String userName;
     /**
      * 密码
      */
@@ -57,6 +64,7 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
     /**
      * 修改者
@@ -65,6 +73,7 @@ public class User implements Serializable {
     /**
      * 修改时间
      */
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime modifiedAt;
 }
 
