@@ -45,6 +45,11 @@ public class User implements Serializable {
      */
     private String sex;
     /**
+     * 手机号码
+     */
+    @TableField(value = "phonenumber")
+    private String phoneNumber;
+    /**
      * 电子邮箱
      */
     private String email;
