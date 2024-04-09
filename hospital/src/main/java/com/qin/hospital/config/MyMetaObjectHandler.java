@@ -14,7 +14,7 @@ import java.time.LocalTime;
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName("createdAt", LocalTime.now(), metaObject);
+        this.setFieldValByName("createdAt", LocalDateTime.now(), metaObject);
     }
 
     @Override
