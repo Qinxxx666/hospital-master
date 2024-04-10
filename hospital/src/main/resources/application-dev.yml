@@ -15,11 +15,6 @@ spring:
       min-idle: 1
       max-wait: 2000
 
-jasypt:
-  encryptor:
-    password: Angel
-    algorithm: PBEWithMD5AndDES
-
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
