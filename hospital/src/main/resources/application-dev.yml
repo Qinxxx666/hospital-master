@@ -5,10 +5,15 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://150.158.98.221:3307/hospital
-    username: root
+    url: ENC(o1NSvXSFk3aufNEWH0sdPC86RNCshUjNzen2JonYCP064xQe9mI4+q7Q6G6BePuKCPwwbcQQyIo=)
+    username: ENC(9Xnm70DXwfuHFf2465fkiQ==)
     password: ENC(49sIrimhHZuhLd6jPwYAZq3mc1nj0E1X)
     type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 2
+      max-active: 10
+      min-idle: 1
+      max-wait: 2000
 
 jasypt:
   encryptor:

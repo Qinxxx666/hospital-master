@@ -33,9 +33,18 @@ public class User implements Serializable {
     @TableField(value = "username")
     private String userName;
     /**
+     * 真实姓名
+     */
+    @TableField(value = "realname")
+    private String realName;
+    /**
      * 密码
      */
     private String password;
+    /**
+     * 密码加盐
+     */
+    private String salt;
     /**
      * 年龄
      */
@@ -61,6 +70,11 @@ public class User implements Serializable {
      * 是否允许登录(0不允许，1允许)
      */
     private String enabledLogin;
+    /**
+     * 注册时间
+     */
+    @TableField(value = "registertime")
+    private LocalDateTime registerTime;
     /**
      * 创建者
      */

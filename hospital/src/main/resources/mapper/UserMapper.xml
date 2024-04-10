@@ -9,9 +9,12 @@
         <result property="age" column="age" jdbcType="INTEGER"/>
         <result property="sex" column="sex" jdbcType="VARCHAR"/>
         <result property="phoneNumber" column="phonenumber" jdbcType="VARCHAR"/>
+        <result property="realName" column="realname" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
         <result property="enabledLogin" column="enabledLogin" jdbcType="VARCHAR"/>
+        <result property="registerTime" column="registertime" jdbcType="TIMESTAMP"/>
         <result property="creator" column="creator" jdbcType="VARCHAR"/>
         <result property="createdAt" column="createdAt" jdbcType="TIMESTAMP"/>
         <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
