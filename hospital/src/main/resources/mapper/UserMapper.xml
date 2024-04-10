@@ -24,23 +24,36 @@
     <select id="getUserList" parameterType="User" resultMap="UserMap">
         SELECT * FROM user
         <where>
+            1 = 1
             <if test="id != null and id != ''">
-                id = #{id} AND
+                AND id = #{id}
             </if>
             <if test="userName != null and userName != ''">
-                username like concat('%',#{userName},'%') AND
+                AND username like concat('%',#{userName},'%')
             </if>
             <if test="sex != null and sex != ''">
-                sex = #{sex} AND
+                AND sex = #{sex}
             </if>
             <if test="age != null and age != ''">
-                age = #{age} AND
+                AND age = #{age}
             </if>
             <if test="email != null and email != ''">
-                email = #{email} AND
+                AND email = #{email}
             </if>
             <if test="enabledLogin != null and enabledLogin != ''">
-                enabledLogin = #{enabledLogin} AND
+                AND enabledLogin = #{enabledLogin}
+            </if>
+        </where>
+    </select>
+
+    <select id="login" parameterType="User" resultType="User">
+        SELECT * FROM user
+        <where>
+            <if test="userName != '' and userName != null">
+                username = #{userName}
+            </if>
+            <if test="phoneNumber != '' and phoneNumber != null">
+                OR phonenumber = #{phoneNumber}
             </if>
         </where>
     </select>
