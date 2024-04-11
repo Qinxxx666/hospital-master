@@ -4,6 +4,7 @@ import com.qin.hospital.entity.User;
 import com.qin.hospital.service.UserService;
 import com.qin.hospital.util.RestResponse;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -34,29 +35,27 @@ public class UserController {
             rc = -1;
         }
         if (rc == 1) {
-            return RestResponse.success(200,"添加成功");
+            return RestResponse.success(200, "添加成功");
         } else {
-            return RestResponse.failure(501,"添加失败");
+            return RestResponse.failure(501, "添加失败");
         }
     }
 
     @PostMapping("/login")
-    public RestResponse<User> login(@RequestParam("userName") String userName, @RequestParam("password") String password)
-    {
+    public RestResponse<User> login(@RequestBody String userName, @RequestBody String password) {
+        if (StringUtils.isEmpty(userName)) {
+            return RestResponse.failure(40004, "用户名不能为空");
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         User user = userService.login(map);
-        if (user == null)
-        {
+        if (user == null) {
             return RestResponse.success(40001, "用户未注册");
         }
-        if (passwordEncoder.matches(password, user.getPassword()))
-        {
+        if (passwordEncoder.matches(password, user.getPassword())) {
             return RestResponse.success(20000, "登录成功", user);
-        }
-        else
-        {
+        } else {
             return RestResponse.success(40002, "密码错误");
         }
     }

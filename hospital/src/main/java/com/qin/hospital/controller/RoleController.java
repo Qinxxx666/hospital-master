@@ -1,8 +1,6 @@
 package com.qin.hospital.controller;
 
 import com.qin.hospital.entity.Role;
-import com.qin.hospital.entity.User;
-import com.qin.hospital.service.Impl.RoleServiceImpl;
 import com.qin.hospital.util.RestResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ import java.util.List;
 @RequestMapping("/role")
 public class RoleController {
     @Autowired
-    RoleServiceImpl roleService;
+    com.qin.hospital.service.impl.RoleServiceImpl roleService;
 
     @GetMapping("/getRoleList")
     public List<Role> getRoleList(Role role) {
