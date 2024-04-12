@@ -14,6 +14,15 @@ spring:
       max-active: 10
       min-idle: 1
       max-wait: 2000
+  redis:
+    host: ENC(L5SBgctsckKudFCYXk2vkw4iz6uCID9g)
+    port: 6379
+    password: ENC(qFtCIaeCzGtXof+WU9Sgx8zwFcE/PuEL)
+    lettuce:
+      pool:
+        max-idle: 16
+        max-active: 32
+        min-idle: 8
 
 mybatis-plus:
   configuration:

@@ -7,12 +7,14 @@ import com.qin.hospital.util.RestResponse;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Log4j2
 @RestController
@@ -41,7 +43,8 @@ public class UserController {
             return RestResponse.failure(501, "添加失败");
         }
     }
-
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
     @PostMapping("/login")
     public RestResponse<String> login(String userName, String password) {
         if (StringUtils.isEmpty(userName)) {
@@ -56,6 +59,9 @@ public class UserController {
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
             String token = JWTUtils.getToken(user.getId(), user.getUserName());
+            user.setPassword("");
+            redisTemplate.opsForValue().set(token, user);
+            redisTemplate.expire(token, 1800, TimeUnit.SECONDS);
             return RestResponse.success(200, "登录成功", token);
         } else {
             return RestResponse.success(40002, "密码错误");
