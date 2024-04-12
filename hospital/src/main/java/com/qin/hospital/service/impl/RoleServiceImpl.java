@@ -1,4 +1,4 @@
-package com.qin.hospital.service.impl;
+package com.qin.hospital.service.Impl;
 
 import com.qin.hospital.entity.Role;
 import com.qin.hospital.mapper.RoleMapper;
