@@ -29,7 +29,15 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public RestResponse<String> addUser(User user) {
+    public RestResponse<String> addUser(@RequestHeader(value = "Authorization", required = false) String authorizationHeader, User user) {
+        if (StringUtils.isEmpty(authorizationHeader))
+        {
+            return RestResponse.failure(10011, "用户未认证");
+        }
+        if (Boolean.TRUE.equals(redisTemplate.hasKey(authorizationHeader)))
+        {
+            return RestResponse.failure(10010, "登录时间过期");
+        }
         int rc;
         try {
             rc = userService.addUser(user);
@@ -46,7 +54,9 @@ public class UserController {
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
     @PostMapping("/login")
-    public RestResponse<String> login(String userName, String password) {
+    public RestResponse<String> login(@RequestHeader(value = "Authorization", required = false) String authorizationHeader,
+                                      String userName, String password) {
+        System.out.println("authorizationHeader:"+authorizationHeader);
         if (StringUtils.isEmpty(userName)) {
             return RestResponse.failure(40004, "用户名不能为空");
         }
@@ -58,11 +68,18 @@ public class UserController {
             return RestResponse.success(40001, "用户未注册");
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
-            String token = JWTUtils.getToken(user.getId(), user.getUserName());
-            user.setPassword("");
-            redisTemplate.opsForValue().set(token, user);
-            redisTemplate.expire(token, 1800, TimeUnit.SECONDS);
-            return RestResponse.success(200, "登录成功", token);
+            if(StringUtils.isEmpty(authorizationHeader)) {
+                String token = JWTUtils.getToken(user.getId(), user.getUserName());
+                user.setPassword("");
+                redisTemplate.opsForValue().set(token, user);
+                redisTemplate.expire(token, 1800, TimeUnit.SECONDS);
+                return RestResponse.success(200, "登录成功", token);
+            }
+            else {
+                redisTemplate.expire(authorizationHeader, 1800, TimeUnit.SECONDS);
+                return RestResponse.success(200, "登录成功", authorizationHeader);
+            }
+
         } else {
             return RestResponse.success(40002, "密码错误");
         }
