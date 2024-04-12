@@ -2,6 +2,7 @@ package com.qin.hospital.controller;
 
 import com.qin.hospital.entity.User;
 import com.qin.hospital.service.UserService;
+import com.qin.hospital.util.JWTUtils;
 import com.qin.hospital.util.RestResponse;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public RestResponse<User> login(@RequestBody String userName, @RequestBody String password) {
+    public RestResponse<String> login(String userName, String password) {
         if (StringUtils.isEmpty(userName)) {
             return RestResponse.failure(40004, "用户名不能为空");
         }
@@ -54,7 +55,8 @@ public class UserController {
             return RestResponse.success(40001, "用户未注册");
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return RestResponse.success(20000, "登录成功", user);
+            String token = JWTUtils.getToken(user.getId(), user.getUserName());
+            return RestResponse.success(200, "登录成功", token);
         } else {
             return RestResponse.success(40002, "密码错误");
         }
