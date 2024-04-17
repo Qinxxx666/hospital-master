@@ -29,17 +29,17 @@ public class WebRequestInterception implements HandlerInterceptor {
      * @return 放行或拦截
      * @throws Exception 报错
      */
-    @Override
-    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
-        String authorization = request.getHeader("Authorization");
-        if (StringUtils.isEmpty(authorization)) {
-            response.sendError(403, "非法用户");
-            return false;
-        }
-        if (Boolean.FALSE.equals(redisTemplate.hasKey(authorization))) {
-            response.sendError(401, "用户认证过期");
-            return false;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
+//        String authorization = request.getHeader("Authorization");
+//        if (StringUtils.isEmpty(authorization)) {
+//            response.sendError(403, "非法用户");
+//            return false;
+//        }
+//        if (Boolean.FALSE.equals(redisTemplate.hasKey(authorization))) {
+//            response.sendError(401, "用户认证过期");
+//            return false;
+//        }
+//        return true;
+//    }
 }

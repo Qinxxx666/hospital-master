@@ -84,4 +84,17 @@ public class UserController {
             return RestResponse.success(40002, "密码错误");
         }
     }
+
+    @GetMapping("/verify")
+    public RestResponse<String> verifyToken(@RequestHeader(value = "Authorization") String authorizationHeader) {
+        log.info(authorizationHeader);
+        if (StringUtils.isEmpty(authorizationHeader)) {
+            return RestResponse.failure(403, "非法用户");
+        }
+        if (Boolean.FALSE.equals(redisTemplate.hasKey(authorizationHeader))) {
+
+            return RestResponse.failure(401, "用户认证过期");
+        }
+        return RestResponse.success(200, "用户认证通过");
+    }
 }
