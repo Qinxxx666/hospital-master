@@ -97,4 +97,17 @@ public class UserController {
         }
         return RestResponse.success(200, "用户认证通过");
     }
+
+    @GetMapping("/userInfo")
+    public RestResponse<User> getUserInfo(@RequestHeader(value = "Authorization") String authorizationHeader) {
+        if (StringUtils.isEmpty(authorizationHeader)) {
+            return RestResponse.failure(403, "非法用户");
+        }
+        if (Boolean.FALSE.equals(redisTemplate.hasKey(authorizationHeader))) {
+
+            return RestResponse.failure(401, "用户认证过期");
+        }
+        User user = (User) redisTemplate.opsForValue().get(authorizationHeader);
+        return RestResponse.success(200, "用户认证通过", user);
+    }
 }
