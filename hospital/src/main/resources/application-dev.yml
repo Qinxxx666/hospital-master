@@ -1,6 +1,8 @@
 # 应用服务 WEB 访问端口
 server:
   port: 8080
+  tomcat:
+    connection-timeout: 30000
 
 spring:
   datasource:
@@ -23,6 +25,9 @@ spring:
         max-idle: 16
         max-active: 32
         min-idle: 8
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
 mybatis-plus:
   configuration:
@@ -30,3 +35,9 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.qin.hospital.entity
+
+minio:
+  endpoint: http://localhost:9000
+  accessKey: minio
+  secretKey: 123
+  bucketName: hospital
