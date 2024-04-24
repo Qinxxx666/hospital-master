@@ -65,7 +65,7 @@ public class User implements Serializable {
     /**
      * 头像
      */
-    private String avatar;
+    private File avatar;
     /**
      * 是否允许登录(0不允许，1允许)
      */

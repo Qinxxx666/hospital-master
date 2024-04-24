@@ -25,4 +25,5 @@ public interface UserMapper extends BaseMapper<User> {
      */
     User login(Map<String,String> map);
 
+    Integer register(User user);
 }

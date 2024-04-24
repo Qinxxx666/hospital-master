@@ -2,6 +2,7 @@ package com.qin.hospital.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qin.hospital.entity.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

@@ -21,8 +21,8 @@ public class FileController {
     @Autowired
     MinioUtils minioUtils;
 
-    @PostMapping("/upload")
-    public String uploadFile(MultipartFile file) {
-        return minioUtils.uploadFile(file);
-    }
+//    @PostMapping("/upload")
+//    public String uploadFile(MultipartFile file) {
+//        return minioUtils.uploadFile(file);
+//    }
 }

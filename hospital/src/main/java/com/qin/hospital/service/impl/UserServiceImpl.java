@@ -3,13 +3,10 @@ package com.qin.hospital.service.impl;
 import com.qin.hospital.entity.User;
 import com.qin.hospital.mapper.UserMapper;
 import com.qin.hospital.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,5 +32,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(Map<String, String> map) {
         return userMapper.login(map);
+    }
+
+    @Override
+    public Integer register(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userMapper.register(user);
     }
 }

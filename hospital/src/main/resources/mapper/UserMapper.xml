@@ -12,17 +12,20 @@
         <result property="realName" column="realname" jdbcType="VARCHAR"/>
         <result property="salt" column="salt" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
-        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
         <result property="enabledLogin" column="enabledLogin" jdbcType="VARCHAR"/>
         <result property="registerTime" column="registertime" jdbcType="TIMESTAMP"/>
         <result property="creator" column="creator" jdbcType="VARCHAR"/>
         <result property="createdAt" column="createdAt" jdbcType="TIMESTAMP"/>
         <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
         <result property="modifiedAt" column="modifiedAt" jdbcType="TIMESTAMP"/>
+        <association property="avatar" column="avatar" javaType="File" select="com.qin.hospital.mapper.FileMapper.selectById">
+        </association>
     </resultMap>
 
     <select id="getUserList" parameterType="User" resultMap="UserMap">
-        SELECT * FROM user
+        SELECT
+            id, userName, realname, age, sex, phonenumber, email, avatar, registertime, enabledLogin
+            FROM user
         <where>
             1 = 1
             <if test="id != null and id != ''">
@@ -57,4 +60,10 @@
             </if>
         </where>
     </select>
+
+    <insert id="register" parameterType="User" keyProperty="id">
+        INSERT INTO user (id, userName, realName, password, age, sex, phonenumber, email, avatar, registertime, enabledLogin, creator, createdAt, modifier, modifiedAt)
+        VALUES
+            (#{id}, #{userName}, #{realName}, #{password}, #{age}, #{sex}, #{phoneNumber}, #{email}, #{avatar.id}, #{registerTime}, #{enabledLogin}, #{creator}, #{createdAt}, #{modifier}, #{modifiedAt})
+    </insert>
 </mapper>

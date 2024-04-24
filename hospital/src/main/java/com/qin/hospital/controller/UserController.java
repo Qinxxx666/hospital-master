@@ -1,8 +1,11 @@
 package com.qin.hospital.controller;
 
+import com.qin.hospital.VO.UserFormVO;
+import com.qin.hospital.entity.File;
 import com.qin.hospital.entity.User;
 import com.qin.hospital.service.UserService;
 import com.qin.hospital.util.JWTUtils;
+import com.qin.hospital.util.MinioUtils;
 import com.qin.hospital.util.RestResponse;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,24 +29,51 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    MinioUtils minioUtils;
+
     @GetMapping("/getUserList")
-    public List<User> getUserInfo(User user) {
-        return userService.getUserList(user);
+    public List<UserFormVO> getUserInfo(User user) {
+        List<UserFormVO> list = new ArrayList<>();
+        for (User userVO : userService.getUserList(user)) {
+            UserFormVO vo = new UserFormVO();
+            vo.setId(userVO.getId());
+            vo.setUserName(userVO.getUserName());
+            vo.setRealName(userVO.getRealName());
+            vo.setAge(userVO.getAge());
+            vo.setEmail(userVO.getEmail());
+            vo.setPhoneNumber(userVO.getPhoneNumber());
+            vo.setEnabledLogin(userVO.getEnabledLogin());
+            vo.setRegisterTime(userVO.getRegisterTime());
+            if (userVO.getAvatar() != null) {
+                vo.setAvatar(minioUtils.getUrl(userVO.getAvatar().getPathName(), userVO.getAvatar().getName()));
+            }
+            list.add(vo);
+        }
+        return list;
     }
 
     @PostMapping("/add")
-    public RestResponse<String> addUser(@RequestHeader(value = "Authorization", required = false) String authorizationHeader, User user) {
-        if (StringUtils.isEmpty(authorizationHeader))
-        {
+    public RestResponse<String> addUser(@RequestHeader(value = "Authorization", required = false) String authorizationHeader,
+                                        User user,
+                                        @RequestParam(value = "avatarFile", required = false) MultipartFile multipartFile) {
+        if (StringUtils.isEmpty(authorizationHeader)) {
             return RestResponse.failure(10011, "用户未认证");
         }
-        if (Boolean.TRUE.equals(redisTemplate.hasKey(authorizationHeader)))
-        {
+        if (Boolean.FALSE.equals(redisTemplate.hasKey(authorizationHeader))) {
             return RestResponse.failure(10010, "登录时间过期");
         }
         int rc;
+
+        log.info(multipartFile);
+        if (multipartFile != null) {
+            File file = minioUtils.uploadFile("User", multipartFile);
+            user.setAvatar(file);
+        }
         try {
-            rc = userService.addUser(user);
+            user.setPassword("123456");
+            user.setRegisterTime(LocalDateTime.now());
+            rc = userService.register(user);
         } catch (Exception e) {
             log.error(e);
             rc = -1;
@@ -51,12 +84,14 @@ public class UserController {
             return RestResponse.failure(501, "添加失败");
         }
     }
+
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
+
     @PostMapping("/login")
     public RestResponse<String> login(@RequestHeader(value = "Authorization", required = false) String authorizationHeader,
                                       String userName, String password) {
-        System.out.println("authorizationHeader:"+authorizationHeader);
+        System.out.println("authorizationHeader:" + authorizationHeader);
         if (StringUtils.isEmpty(userName)) {
             return RestResponse.failure(40004, "用户名不能为空");
         }
@@ -68,14 +103,13 @@ public class UserController {
             return RestResponse.success(40001, "用户未注册");
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
-            if(StringUtils.isEmpty(authorizationHeader)) {
+            if (StringUtils.isEmpty(authorizationHeader)) {
                 String token = JWTUtils.getToken(user.getId(), user.getUserName());
                 user.setPassword("");
                 redisTemplate.opsForValue().set(token, user);
                 redisTemplate.expire(token, 1800, TimeUnit.SECONDS);
                 return RestResponse.success(200, "登录成功", token);
-            }
-            else {
+            } else {
                 redisTemplate.expire(authorizationHeader, 1800, TimeUnit.SECONDS);
                 return RestResponse.success(200, "登录成功", authorizationHeader);
             }

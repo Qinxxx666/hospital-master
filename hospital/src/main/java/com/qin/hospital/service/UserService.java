@@ -13,5 +13,7 @@ public interface UserService {
 
     int addUser(User user);
 
-    User login(Map<String,String> map);
+    User login(Map<String, String> map);
+
+    Integer register(User user);
 }
