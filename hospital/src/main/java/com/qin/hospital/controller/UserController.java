@@ -65,7 +65,6 @@ public class UserController {
         }
         int rc;
 
-        log.info(multipartFile);
         if (multipartFile != null) {
             File file = minioUtils.uploadFile("User", multipartFile);
             user.setAvatar(file);

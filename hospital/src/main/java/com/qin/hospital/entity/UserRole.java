@@ -37,6 +37,13 @@ public class UserRole implements Serializable {
      */
     @TableField(value = "r_id")
     private String rId;
+
+    /**
+     * 角色id
+     */
+    @TableField(value = "parent_id")
+    private String parentId;
+
     /**
      * 创建者
      */

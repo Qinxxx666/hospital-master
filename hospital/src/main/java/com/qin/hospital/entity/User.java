@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (User)实体类
@@ -62,6 +63,30 @@ public class User implements Serializable {
      * 电子邮箱
      */
     private String email;
+    /**
+     * 家庭住址
+     */
+    private String address;
+    /**
+     * 用户类型
+     */
+    private String type;
+    /**
+     * 学历
+     */
+    private String diploma;
+    /**
+     * 专业
+     */
+    private Profession profession;
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 角色列表
+     */
+    private List<Role> roles;
     /**
      * 头像
      */
