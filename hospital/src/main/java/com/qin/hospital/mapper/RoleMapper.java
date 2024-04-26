@@ -2,6 +2,7 @@ package com.qin.hospital.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qin.hospital.entity.Role;
+import com.qin.hospital.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface RoleMapper extends BaseMapper<Role> {
     int addRole(Role role);
     int updateRole(Role role);
     int deleteRole(Long id);
+
+    List<Role> getRolesByUser(User user);
 }

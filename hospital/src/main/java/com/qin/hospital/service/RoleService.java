@@ -1,6 +1,7 @@
 package com.qin.hospital.service;
 
 import com.qin.hospital.entity.Role;
+import com.qin.hospital.entity.User;
 
 import java.util.List;
 
@@ -24,4 +25,5 @@ public interface RoleService {
     int addRole(Role role);
     int updateRole(Role role);
     int deleteRole(Role role);
+    List<Role> getRolesByUser(User user);
 }

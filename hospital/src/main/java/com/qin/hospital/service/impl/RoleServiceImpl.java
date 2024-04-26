@@ -1,6 +1,7 @@
 package com.qin.hospital.service.impl;
 
 import com.qin.hospital.entity.Role;
+import com.qin.hospital.entity.User;
 import com.qin.hospital.mapper.RoleMapper;
 import com.qin.hospital.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int deleteRole(Role role) {
         return roleMapper.deleteById(role.getId());
+    }
+
+    @Override
+    public List<Role> getRolesByUser(User user) {
+        return roleMapper.getRolesByUser(user);
     }
 }

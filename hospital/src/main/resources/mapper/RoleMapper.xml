@@ -12,5 +12,14 @@
             </if>
         </where>
     </select>
+    <select id="getRoleList" parameterType="com.qin.hospital.entity.User" resultType="com.qin.hospital.entity.Role">
+        SELECT
+            *
+        FROM
+            role r
+        JOIN (select * from user_role where user_role.u_id= #{id}) as `ur`
+        WHERE
+            r.id = ur.r_id
+    </select>
 
 </mapper>
