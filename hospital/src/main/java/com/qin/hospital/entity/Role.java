@@ -29,6 +29,12 @@ public class Role implements Serializable {
      */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
+
+    /**
+     * 父角色id
+     */
+    @TableField(value = "parent_id")
+    private String parentId;
     /**
      * 角色名称
      */

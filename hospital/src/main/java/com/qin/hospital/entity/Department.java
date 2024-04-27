@@ -6,43 +6,44 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.io.Serializable;
 
 /**
- * (UserRole)实体类
+ * (Department)实体类
  *
  * @author makejava
- * @since 2024-04-08 15:35:52
+ * @since 2024-04-27 16:48:04
  */
-@Component
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@TableName(value = "user_role")
-public class UserRole implements Serializable {
-    private static final long serialVersionUID = 257693924221477622L;
+@NoArgsConstructor
+@Component
+@TableName(value = "department")
+public class Department implements Serializable {
+    private static final long serialVersionUID = -21528052322751781L;
     /**
-     * 用户角色关联表id
+     * 科室ID
      */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     /**
-     * 用户id
+     * 科室代码
      */
-    @TableField(value = "u_id")
-    private String uId;
+    private String code;
     /**
-     * 角色id
+     * 科室名称
      */
-    @TableField(value = "r_id")
-    private String rId;
-
+    private String name;
     /**
-     * 角色描述
+     * 父科室id
+     */
+    @TableField(value = "parent_id")
+    private Long parentId;
+    /**
+     * 描述
      */
     private String description;
-
     /**
      * 创建者
      */
@@ -51,7 +52,7 @@ public class UserRole implements Serializable {
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createdAt;
+    private Date createdAt;
     /**
      * 修改者
      */
@@ -60,6 +61,6 @@ public class UserRole implements Serializable {
      * 修改时间
      */
     @TableField(fill = FieldFill.UPDATE)
-    private LocalDateTime modifiedAt;
+    private Date modifiedAt;
 }
 
