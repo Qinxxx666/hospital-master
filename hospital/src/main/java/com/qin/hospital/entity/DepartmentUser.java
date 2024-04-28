@@ -1,46 +1,45 @@
 package com.qin.hospital.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.io.Serializable;
 
 /**
- * (Department)实体类
+ * (DepartmentUser)实体类
  *
  * @author makejava
- * @since 2024-04-27 16:48:04
+ * @since 2024-04-28 09:39:08
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-@TableName(value = "department")
-public class Department implements Serializable {
-    private static final long serialVersionUID = -21528052322751781L;
+@TableName(value = "department_user")
+public class DepartmentUser implements Serializable {
+    private static final long serialVersionUID = -68281582601795746L;
     /**
-     * 科室ID
+     * 科室人员关联表Id
      */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     /**
-     * 科室代码
+     * 人员ID
      */
-    private String code;
+    @TableField(value = "u_id")
+    private Long uId;
     /**
-     * 科室名称
+     * 科室ID
      */
-    private String name;
-    /**
-     * 父科室id
-     */
-    @TableField(value = "parent_id")
-    private Department parentDepartment;
+    @TableField(value = "d_id")
+    private Long dId;
     /**
      * 描述
      */
@@ -52,8 +51,7 @@ public class Department implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createdAt;
+    private Date createdAt;
     /**
      * 修改者
      */
@@ -61,7 +59,6 @@ public class Department implements Serializable {
     /**
      * 修改时间
      */
-    @TableField(fill = FieldFill.UPDATE)
-    private LocalDateTime modifiedAt;
+    private Date modifiedAt;
 }
 

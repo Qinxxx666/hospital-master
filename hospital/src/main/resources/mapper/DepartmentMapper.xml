@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qin.hospital.mapper.DepartmentMapper">
+    <resultMap id="DepartmentMap" type="Department">
+        <association property="parentDepartment" column="parent_id" javaType="Department" select="selectById"/>
+    </resultMap>
+
+    <select id="getDepartmentListByParent" parameterType="Department" resultMap="DepartmentMap">
+        SELECT id, name FROM department
+        WHERE
+            parent_id = #{id}
+    </select>
+
+    <select id="getNoneParentDepartmentList" resultMap="DepartmentMap">
+        SELECT id, name FROM department WHERE parent_id IS NULL
+    </select>
+
+    <insert id="insert" parameterType="Department">
+INSERT INTO department (id, code, name, parent_id, description, creator, createdAt, modifier, modifiedAt)
+VALUES
+    (#{id}, #{code}, #{name}, #{parentDepartment.id}, #{description}, #{creator}, #{createdAt}, #{modifier}, #{modifiedAt})
+    </insert>
+</mapper>
