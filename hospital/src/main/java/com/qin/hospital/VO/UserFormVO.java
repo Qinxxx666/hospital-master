@@ -2,6 +2,7 @@ package com.qin.hospital.VO;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.qin.hospital.entity.File;
+import com.qin.hospital.entity.Profession;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class UserFormVO {
 
-    private Long id;
+    private String id;
 
     @TableField(value = "username")
     private String userName;
@@ -46,6 +47,26 @@ public class UserFormVO {
      * 是否允许登录(0不允许，1允许)
      */
     private String enabledLogin;
+
+    /**
+     * 专业
+     */
+    private String profession;
+
+    /**
+     * 地址
+     */
+    private String address;
+
+    /**
+     * 用户类型
+     */
+    private String type;
+
+    /**
+     * 学历
+     */
+    private String diploma;
 
     /**
      * 是否允许登录(0不允许，1允许)

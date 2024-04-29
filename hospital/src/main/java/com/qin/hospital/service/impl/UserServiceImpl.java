@@ -1,5 +1,6 @@
 package com.qin.hospital.service.impl;
 
+import com.qin.hospital.VO.UserFormVO;
 import com.qin.hospital.entity.User;
 import com.qin.hospital.mapper.UserMapper;
 import com.qin.hospital.service.UserService;
@@ -38,5 +39,15 @@ public class UserServiceImpl implements UserService {
     public Integer register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userMapper.register(user);
+    }
+
+    /**
+     * 根据科室id查询用户列表
+     * @param id 科室id
+     * @return 用户列表
+     */
+    @Override
+    public List<User> getUserListByDepartmentId(Long id) {
+        return userMapper.getUserListByDepartmentId(id);
     }
 }

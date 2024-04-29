@@ -37,7 +37,7 @@ public class UserController {
         List<UserFormVO> list = new ArrayList<>();
         for (User userVO : userService.getUserList(user)) {
             UserFormVO vo = new UserFormVO();
-            vo.setId(userVO.getId());
+            vo.setId(userVO.getId().toString());
             vo.setUserName(userVO.getUserName());
             vo.setRealName(userVO.getRealName());
             vo.setAge(userVO.getAge());

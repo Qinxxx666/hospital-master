@@ -1,7 +1,9 @@
 package com.qin.hospital.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qin.hospital.VO.UserFormVO;
 import com.qin.hospital.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +28,11 @@ public interface UserMapper extends BaseMapper<User> {
     User login(Map<String,String> map);
 
     Integer register(User user);
+
+    /**
+     * 根据科室id查询用户列表
+     * @param id 科室id
+     * @return 用户列表
+     */
+    List<User> getUserListByDepartmentId(@Param(value = "id") Long id);
 }
