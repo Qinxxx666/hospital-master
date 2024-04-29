@@ -12,7 +12,7 @@ public interface DepartmentService {
 
     List<Department> getNoneParentDepartmentList();
 
-
+    Department getDepartmentById(Long id);
 
     int addDepartment(Department department);
 

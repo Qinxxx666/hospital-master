@@ -34,12 +34,12 @@ public class DepartmentUser implements Serializable {
      * 人员ID
      */
     @TableField(value = "u_id")
-    private Long uId;
+    private User user;
     /**
      * 科室ID
      */
     @TableField(value = "d_id")
-    private Long dId;
+    private Department department;
     /**
      * 描述
      */
