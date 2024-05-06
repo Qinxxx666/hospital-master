@@ -12,13 +12,11 @@ import com.qin.hospital.util.MinioUtils;
 import com.qin.hospital.util.RestResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author WanYue
@@ -98,6 +96,29 @@ public class DepartmentController {
         return RestResponse.success(userFormVo);
     }
 
+    @PostMapping("/add")
+    public RestResponse<String> addDepartment(DepartmentInfoVO departmentInfo) {
+        Department department = new Department();
+        department.setParentDepartment(departmentService.getDepartmentById(departmentInfo.getParentId()));
+        department.setName(departmentInfo.getName());
+        department.setCode(departmentInfo.getCode());
+        department.setDescription(departmentInfo.getDescription());
+        int rc = departmentService.addDepartment(department);
+        if (rc < 0) {
+            return RestResponse.failure(201, "添加失败");
+        }
+        return RestResponse.success(200);
+    }
+
+    @PostMapping("/delete/")
+    public RestResponse<String> deleteDepartment(@RequestBody List<String> ids) {
+        List<Long> idList = ids.stream().map(Long::valueOf).collect(Collectors.toList());
+        int rc = departmentService.deleteBatchIds(idList);
+        if (rc < 0) {
+            return RestResponse.failure(201, "删除失败");
+        }
+        return RestResponse.success(200, "删除成功");
+    }
 
     private void getChildren(Department department, DepartmentTreeVO treeVo) {
         List<Department> departmentList = departmentService.getDepartmentListByParent(department.getId());

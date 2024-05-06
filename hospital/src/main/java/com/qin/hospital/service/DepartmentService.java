@@ -19,4 +19,6 @@ public interface DepartmentService {
     int updateDepartment(Department department);
 
     int deleteDepartment(Long id);
+
+    int deleteBatchIds(List<Long> ids);
 }

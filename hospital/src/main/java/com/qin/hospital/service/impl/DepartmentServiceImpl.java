@@ -48,4 +48,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public int deleteDepartment(Long id) {
         return departmentMapper.deleteById(id);
     }
+
+    @Override
+    public int deleteBatchIds(List<Long> ids) {
+        return departmentMapper.deleteBatchIds(ids);
+    }
 }

@@ -6,18 +6,20 @@
     </resultMap>
 
     <select id="getDepartmentListByParent" parameterType="Department" resultMap="DepartmentMap">
-        SELECT id, name FROM department
-        WHERE
-            parent_id = #{id}
+        SELECT id, name
+        FROM department
+        WHERE parent_id = #{id}
     </select>
 
     <select id="getNoneParentDepartmentList" resultMap="DepartmentMap">
-        SELECT id, name FROM department WHERE parent_id IS NULL
+        SELECT id, name
+        FROM department
+        WHERE parent_id IS NULL
     </select>
 
     <insert id="insert" parameterType="Department">
-INSERT INTO department (id, code, name, parent_id, description, creator, createdAt, modifier, modifiedAt)
-VALUES
-    (#{id}, #{code}, #{name}, #{parentDepartment.id}, #{description}, #{creator}, #{createdAt}, #{modifier}, #{modifiedAt})
+        INSERT INTO department (id, code, name, parent_id, description, creator, createdAt, modifier, modifiedAt)
+        VALUES (#{id}, #{code}, #{name}, #{parentDepartment.id}, #{description}, #{creator}, #{createdAt}, #{modifier},
+                #{modifiedAt})
     </insert>
 </mapper>

@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentInfoVO {
+    private Long id;
     private String code;
     private String name;
     private String description;
     private String number;
+    private Long parentId;
 }
