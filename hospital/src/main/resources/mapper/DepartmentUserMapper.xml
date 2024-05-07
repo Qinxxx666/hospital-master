@@ -5,5 +5,39 @@
         <association property="user" column="u_id" javaType="User" select="com.qin.hospital.mapper.UserMapper.selectById"/>
         <association property="department" column="d_id" javaType="Department" select="com.qin.hospital.mapper.DepartmentMapper.selectById"/>
     </resultMap>
+    <resultMap type="User" id="UserMap">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userName" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phonenumber" jdbcType="VARCHAR"/>
+        <result property="realName" column="realname" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="enabledLogin" column="enabledLogin" jdbcType="VARCHAR"/>
+        <result property="registerTime" column="registertime" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="createdAt" jdbcType="TIMESTAMP"/>
+        <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+        <result property="modifiedAt" column="modifiedAt" jdbcType="TIMESTAMP"/>
+        <association property="avatar" column="avatar" javaType="File" select="com.qin.hospital.mapper.FileMapper.selectById"/>
+        <association property="profession" column="profession" javaType="Profession" select="com.qin.hospital.mapper.ProfessionMapper.selectById"/>
 
+    </resultMap>
+
+    <select id="getDepartmentUserListByDepartmentId" resultMap="UserMap">
+        SELECT u.* FROM user u LEFT JOIN department_user du ON u.id = du.u_id WHERE du.d_id = #{departmentId}
+    </select>
+
+    <insert id="batchInsertDepartmentUser" parameterType="java.util.List">
+        INSERT INTO department_user (id, d_id, u_id, description,creator, createdAt, modifier, modifiedAt )
+        VALUES
+        <foreach collection="list" item="item" separator="," index="index">
+            (#{item.id}, #{item.department.id}, #{item.user.id}, #{item.description}, #{item.creator},
+            #{item.createdAt},
+            #{item.modifier}, #{item.modifiedAt})
+        </foreach>
+
+    </insert>
 </mapper>

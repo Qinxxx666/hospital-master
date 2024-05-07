@@ -50,4 +50,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getUserListByDepartmentId(Long id) {
         return userMapper.getUserListByDepartmentId(id);
     }
+
+    @Override
+    public User getUserById(Long id) {
+        return userMapper.selectById(id);
+    }
 }

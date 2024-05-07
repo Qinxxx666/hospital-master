@@ -12,11 +12,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentInfoVO implements Serializable {
-    private Long id;
-    private String code;
-    private String name;
-    private String description;
-    private String number;
-    private Long parentId;
+public class LabelValueVO implements Serializable {
+    private String label;
+    private Object value;
+    private Boolean disabled;
 }

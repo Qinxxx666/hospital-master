@@ -49,6 +49,13 @@
         </where>
     </select>
 
+    <select id="selectById" parameterType="Long" resultMap="UserMap">
+        SELECT
+        id, userName, realname, age, sex, phonenumber, email, avatar, registertime, enabledLogin
+        FROM user
+        WHERE id = #{id}
+    </select>
+
     <select id="login" parameterType="User" resultType="User">
         SELECT * FROM user
         <where>

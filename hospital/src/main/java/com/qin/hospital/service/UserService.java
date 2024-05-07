@@ -19,4 +19,6 @@ public interface UserService {
     Integer register(User user);
 
     List<User> getUserListByDepartmentId(Long id);
+
+    User getUserById(Long id);
 }

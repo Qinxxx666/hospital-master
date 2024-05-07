@@ -1,14 +1,12 @@
 package com.qin.hospital.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -51,7 +49,8 @@ public class DepartmentUser implements Serializable {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createdAt;
     /**
      * 修改者
      */
@@ -59,6 +58,7 @@ public class DepartmentUser implements Serializable {
     /**
      * 修改时间
      */
-    private Date modifiedAt;
+    @TableField(fill = FieldFill.UPDATE)
+    private LocalDateTime modifiedAt;
 }
 
