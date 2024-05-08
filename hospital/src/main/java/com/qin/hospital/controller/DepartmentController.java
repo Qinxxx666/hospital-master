@@ -10,13 +10,13 @@ import com.qin.hospital.service.UserService;
 import com.qin.hospital.util.MinioUtils;
 import com.qin.hospital.util.RestResponse;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -56,16 +56,16 @@ public class DepartmentController {
 
     @GetMapping("/info/{id}")
     public RestResponse<DepartmentInfoVO> getDepartmentInfoById(@PathVariable Long id) {
-        if (Boolean.TRUE.equals(redisTemplate.hasKey(id.toString()))) {
-            return RestResponse.success((DepartmentInfoVO) redisTemplate.opsForValue().get(id.toString()));
-        }
+//        if (Boolean.TRUE.equals(redisTemplate.hasKey(id.toString()))) {
+//            return RestResponse.success((DepartmentInfoVO) redisTemplate.opsForValue().get(id.toString()));
+//        }
         DepartmentInfoVO vo = new DepartmentInfoVO();
         Department department = departmentService.getDepartmentById(id);
         vo.setCode(department.getCode());
         vo.setName(department.getName());
         vo.setDescription(department.getDescription());
         vo.setNumber(departmentUserService.getDepartmentUserCountByDepartmentId(id).toString() + "人");
-        redisTemplate.opsForValue().set(id.toString(), vo, 8, TimeUnit.HOURS);
+//        redisTemplate.opsForValue().set(id.toString(), vo, 8, TimeUnit.HOURS);
         return RestResponse.success(vo);
     }
 
@@ -111,6 +111,7 @@ public class DepartmentController {
         department.setParentDepartment(departmentService.getDepartmentById(departmentInfo.getParentId()));
         department.setName(departmentInfo.getName());
         department.setCode(departmentInfo.getCode());
+        department.setIsReal(departmentInfo.getIsReal());
         department.setDescription(departmentInfo.getDescription());
         int rc = departmentService.addDepartment(department);
         if (rc < 0) {
@@ -148,17 +149,32 @@ public class DepartmentController {
     }
 
     @PostMapping("/addUser")
-    public RestResponse<String> addUserToDepartment(@RequestBody AddUserDepartmentVO addUserDepartmentVO)  {
+    public RestResponse<String> addUserToDepartment(@RequestBody AddUserDepartmentVO addUserDepartmentVO) {
         List<DepartmentUser> list = new ArrayList<>();
-        for (Long id : addUserDepartmentVO.getUserIdList()) {
-            DepartmentUser departmentUser = new DepartmentUser();
-            departmentUser.setDepartment(departmentService.getDepartmentById(addUserDepartmentVO.getDepartmentId()));
-            departmentUser.setUser(userService.getUserById(id));
-            list.add(departmentUser);
+        for (Long dId : addUserDepartmentVO.getDepartmentListId()) {
+            for (Long id : addUserDepartmentVO.getUserIdList()) {
+                DepartmentUser departmentUser = new DepartmentUser();
+                departmentUser.setDepartment(departmentService.getDepartmentById(dId));
+                departmentUser.setUser(userService.getUserById(id));
+                list.add(departmentUser);
+            }
         }
         int rc = departmentUserService.batchInsertDepartmentUser(list);
-        if (rc < 0)
-        {
+        if (rc < 0) {
+            return RestResponse.failure(201, "failure");
+        }
+        return RestResponse.success(200, "success");
+    }
+
+    @PostMapping("/remove")
+    public RestResponse<String> removeUserFromDepartment(@RequestBody List<String> departmentId, String userId) {
+        log.info("departmentId:{} userId:{}", departmentId, userId);
+        if (departmentId.isEmpty() && StringUtils.isBlank(userId)) {
+            return RestResponse.failure(201, "id不能为空");
+        }
+        List<Long> collect = departmentId.stream().map(Long::valueOf).collect(Collectors.toList());
+        int rc = departmentUserService.deleteDepartmentUser(collect, Long.valueOf(userId));
+        if (rc < 0) {
             return RestResponse.failure(201, "failure");
         }
         return RestResponse.success(200, "success");

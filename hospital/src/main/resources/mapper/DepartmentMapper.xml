@@ -18,8 +18,8 @@
     </select>
 
     <insert id="insert" parameterType="Department">
-        INSERT INTO department (id, code, name, parent_id, description, creator, createdAt, modifier, modifiedAt)
-        VALUES (#{id}, #{code}, #{name}, #{parentDepartment.id}, #{description}, #{creator}, #{createdAt}, #{modifier},
+        INSERT INTO department (id, code, name, parent_id, is_real,description, creator, createdAt, modifier, modifiedAt)
+        VALUES (#{id}, #{code}, #{name}, #{parentDepartment.id}, #{isReal}, #{description}, #{creator}, #{createdAt}, #{modifier},
                 #{modifiedAt})
     </insert>
 </mapper>

@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddUserDepartmentVO implements Serializable {
-    private Long departmentId;
+    private List<Long> departmentListId;
     private List<Long> userIdList;
 }

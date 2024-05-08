@@ -1,14 +1,13 @@
 package com.qin.hospital.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.qin.hospital.service.DepartmentService;
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * (Department)实体类
@@ -41,6 +40,12 @@ public class Department implements Serializable {
      */
     @TableField(value = "parent_id")
     private Department parentDepartment;
+
+    /**
+     * 是否真实科室
+     */
+    @TableField(value = "is_real")
+    private String isReal;
     /**
      * 描述
      */

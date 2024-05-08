@@ -27,7 +27,19 @@
     </resultMap>
 
     <select id="getDepartmentUserListByDepartmentId" resultMap="UserMap">
-        SELECT u.* FROM user u LEFT JOIN department_user du ON u.id = du.u_id WHERE du.d_id = #{departmentId}
+        SELECT u.id,
+               u.userName,
+               u.realname,
+               u.age,
+               u.sex,
+               u.phonenumber,
+               u.email,
+               u.avatar,
+               u.registertime,
+               u.enabledLogin
+        FROM user u
+                 LEFT JOIN department_user du ON u.id = du.u_id
+        WHERE du.d_id = #{departmentId}
     </select>
 
     <insert id="batchInsertDepartmentUser" parameterType="java.util.List">
@@ -40,4 +52,15 @@
         </foreach>
 
     </insert>
+
+    <delete id="deleteDepartmentUser" parameterType="Long">
+        DELETE
+        FROM department_user
+        WHERE
+            d_id in
+            <foreach collection="departmentId" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+          AND u_id = #{userId}
+    </delete>
 </mapper>

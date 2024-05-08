@@ -14,4 +14,6 @@ public interface DepartmentUserMapper extends BaseMapper<DepartmentUser> {
     List<User> getDepartmentUserListByDepartmentId(@Param(value = "departmentId") Long departmentId);
 
     Integer batchInsertDepartmentUser(List<DepartmentUser> departmentUserList);
+
+    Integer deleteDepartmentUser(@Param(value = "departmentId") List<Long> departmentId, @Param(value = "userId") Long userId);
 }

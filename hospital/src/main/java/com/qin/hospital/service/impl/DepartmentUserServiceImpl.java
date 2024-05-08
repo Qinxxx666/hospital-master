@@ -34,4 +34,9 @@ public class DepartmentUserServiceImpl implements DepartmentUserService {
     public Integer batchInsertDepartmentUser(List<DepartmentUser> departmentUserList) {
         return departmentUserMapper.batchInsertDepartmentUser(departmentUserList);
     }
+
+    @Override
+    public Integer deleteDepartmentUser(List<Long> departmentId, Long userId) {
+        return departmentUserMapper.deleteDepartmentUser(departmentId, userId);
+    }
 }

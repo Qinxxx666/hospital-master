@@ -1,6 +1,5 @@
 package com.qin.hospital.service;
 
-import com.qin.hospital.VO.UserFormVO;
 import com.qin.hospital.entity.DepartmentUser;
 import com.qin.hospital.entity.User;
 
@@ -15,4 +14,6 @@ public interface DepartmentUserService {
     List<User> getDepartmentUserListByDepartmentId(Long id);
 
     Integer batchInsertDepartmentUser(List<DepartmentUser> departmentUserList);
+
+    Integer deleteDepartmentUser(List<Long> departmentId, Long userId);
 }

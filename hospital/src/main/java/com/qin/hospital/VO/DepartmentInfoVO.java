@@ -18,5 +18,6 @@ public class DepartmentInfoVO implements Serializable {
     private String name;
     private String description;
     private String number;
+    private String isReal;
     private Long parentId;
 }
