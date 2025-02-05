@@ -1,6 +1,5 @@
 package com.qin.hospital.service;
 
-import com.qin.hospital.VO.UserFormVO;
 import com.qin.hospital.entity.User;
 
 import java.util.List;

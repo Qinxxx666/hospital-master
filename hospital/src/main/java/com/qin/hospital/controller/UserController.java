@@ -1,6 +1,6 @@
 package com.qin.hospital.controller;
 
-import com.qin.hospital.VO.UserFormVO;
+import com.qin.hospital.vo.UserFormVO;
 import com.qin.hospital.entity.File;
 import com.qin.hospital.entity.User;
 import com.qin.hospital.service.UserService;
@@ -125,7 +125,6 @@ public class UserController {
             return RestResponse.failure(403, "非法用户");
         }
         if (Boolean.FALSE.equals(redisTemplate.hasKey(authorizationHeader))) {
-
             return RestResponse.failure(401, "用户认证过期");
         }
         return RestResponse.success(200, "用户认证通过");

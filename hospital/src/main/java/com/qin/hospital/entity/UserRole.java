@@ -31,12 +31,12 @@ public class UserRole implements Serializable {
      * 用户id
      */
     @TableField(value = "u_id")
-    private String uId;
+    private Long uId;
     /**
      * 角色id
      */
     @TableField(value = "r_id")
-    private String rId;
+    private Long rId;
 
     /**
      * 角色描述

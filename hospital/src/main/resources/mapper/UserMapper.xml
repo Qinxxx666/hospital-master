@@ -18,18 +18,18 @@
         <result property="createdAt" column="createdAt" jdbcType="TIMESTAMP"/>
         <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
         <result property="modifiedAt" column="modifiedAt" jdbcType="TIMESTAMP"/>
-        <association property="avatar" column="avatar" javaType="File" select="com.qin.hospital.mapper.FileMapper.selectById"/>
-        <association property="profession" column="profession" javaType="Profession" select="com.qin.hospital.mapper.ProfessionMapper.selectById"/>
-
+        <association property="avatar" column="avatar" javaType="File" select="com.qin.hospital.mapper.FileMapper.selectById">
+        </association>
     </resultMap>
 
     <select id="getUserList" parameterType="User" resultMap="UserMap">
         SELECT
-        id, userName, realname, age, sex, phonenumber, email, avatar, registertime, enabledLogin
-        FROM user
+            id, userName, realname, age, sex, phonenumber, email, avatar, registertime, enabledLogin
+            FROM user
         <where>
+            1 = 1
             <if test="id != null and id != ''">
-                id = #{id}
+                AND id = #{id}
             </if>
             <if test="userName != null and userName != ''">
                 AND username like concat('%',#{userName},'%')
@@ -49,13 +49,6 @@
         </where>
     </select>
 
-    <select id="selectById" parameterType="Long" resultMap="UserMap">
-        SELECT
-        id, userName, realname, age, sex, phonenumber, email, avatar, registertime, enabledLogin
-        FROM user
-        WHERE id = #{id}
-    </select>
-
     <select id="login" parameterType="User" resultType="User">
         SELECT * FROM user
         <where>
@@ -73,22 +66,4 @@
         VALUES
             (#{id}, #{userName}, #{realName}, #{password}, #{age}, #{sex}, #{phoneNumber}, #{email}, #{avatar.id}, #{registerTime}, #{enabledLogin}, #{creator}, #{createdAt}, #{modifier}, #{modifiedAt})
     </insert>
-
-    <select id="getUserListByDepartmentId" parameterType="Long" resultMap="UserMap">
-        SELECT t1.id,
-               t1.realname,
-               t1.age,
-               t1.sex,
-               t1.phonenumber,
-               t1.diploma,
-               t1.profession,
-               t1.address,
-               t1.avatar,
-               t1.enabledLogin,
-               t1.email,
-               t1.registertime
-        FROM `user` t1
-                 LEFT JOIN department_user t2 ON t1.id = t2.u_id
-        WHERE t2.d_id = #{id}
-    </select>
 </mapper>

@@ -18,6 +18,12 @@ import java.util.List;
  * @Package com.qin.hospital.controller
  * @Date 2024/4/9 21:32
  * @description: 角色的controller层
+ * @TODO /create
+ * @TODO /delete
+ * @TODO /listRoles
+ * @TODO /listUsersByRole
+ * @TODO /listPermissionsByRole
+ * @TODO /update
  */
 @Log4j2
 @RestController
@@ -31,8 +37,8 @@ public class RoleController {
         return roleService.getRoleList(role);
     }
 
-    @PostMapping("/addRole")
-    public RestResponse<String> addRole(Role role) {
+    @PostMapping("/create")
+    public RestResponse<String> create(Role role) {
         int rc;
         try {
             rc = roleService.addRole(role);
@@ -40,6 +46,7 @@ public class RoleController {
             log.error(e);
             rc = -1;
         }
+
         if (rc == 1) {
             return RestResponse.success(200,"添加成功");
         } else {

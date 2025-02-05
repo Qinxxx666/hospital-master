@@ -1,7 +1,6 @@
 package com.qin.hospital.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.qin.hospital.VO.UserFormVO;
 import com.qin.hospital.entity.User;
 import org.apache.ibatis.annotations.Param;
 

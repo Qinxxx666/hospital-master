@@ -1,8 +1,6 @@
-package com.qin.hospital.VO;
+package com.qin.hospital.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.qin.hospital.entity.File;
-import com.qin.hospital.entity.Profession;
 import lombok.Data;
 
 import java.time.LocalDateTime;
