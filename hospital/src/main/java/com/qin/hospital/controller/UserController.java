@@ -7,6 +7,8 @@ import com.qin.hospital.service.UserService;
 import com.qin.hospital.util.JWTUtils;
 import com.qin.hospital.util.MinioUtils;
 import com.qin.hospital.util.RestResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 @RestController
 @RequestMapping("/user")
+@Tag(name = "user相关API", description = "全部user相关的API")
 public class UserController {
     @Autowired
     UserService userService;
@@ -33,6 +36,7 @@ public class UserController {
     MinioUtils minioUtils;
 
     @GetMapping("/getUserList")
+    @Operation(summary = "用户查询GET请求", description = "列出所有用户列表")
     public List<UserFormVO> getUserInfo(User user) {
         List<UserFormVO> list = new ArrayList<>();
         for (User userVO : userService.getUserList(user)) {

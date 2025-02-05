@@ -3,6 +3,8 @@ package com.qin.hospital.controller;
 import com.qin.hospital.entity.Role;
 import com.qin.hospital.service.RoleService;
 import com.qin.hospital.util.RestResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +30,13 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequestMapping("/role")
+@Tag(name = "role相关API", description = "全部role相关的API")
 public class RoleController {
     @Autowired
     RoleService roleService;
 
     @GetMapping("/getRoleList")
+    @Operation(summary = "角色查询的GET请求", description = "列出所有角色列表")
     public List<Role> getRoleList(Role role) {
         return roleService.getRoleList(role);
     }

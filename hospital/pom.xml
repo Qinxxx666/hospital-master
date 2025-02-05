@@ -66,6 +66,12 @@
             <artifactId>spring-security-crypto</artifactId>
             <version>5.7.4</version>
         </dependency>
+        <!--swagger依赖-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.9</version>
+        </dependency>
         <!--生成Token-->
         <dependency>
             <groupId>com.auth0</groupId>
