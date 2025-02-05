@@ -61,6 +61,7 @@ public class MinioUtils {
      */
     @Transactional
     public File uploadFile(String pathName, MultipartFile file) {
+        //判断文件路径是否有文件存在
         if (StringUtils.isBlank(pathName)) {
             throw new IllegalArgumentException("文件路径不能为空");
         }
@@ -68,6 +69,7 @@ public class MinioUtils {
         if (StringUtils.isBlank(originalFilename)) {
             throw new IllegalArgumentException("文件名不能为空");
         }
+        //java读取文件
         File file1 = new File();
         IdentifierGenerator identifierGenerator = new DefaultIdentifierGenerator();
         Long id = (Long) identifierGenerator.nextId(new File());
@@ -75,6 +77,7 @@ public class MinioUtils {
         //定义文件路径：根路径（hospital）/ 用户定义路径 / 当前日期 / 数据库对应ID / 文件名
         String filePath = ROOTPATH + "/" + pathName + "/" + formatter.format(LocalDateTime.now());
         filePath += "/" + id;
+
         try {
             PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                     .bucket(prop.getBucketName())
@@ -91,6 +94,7 @@ public class MinioUtils {
             f.setSize((float) file.getSize());
             f.setFileType(file.getContentType());
             f.setExtensionName(StringUtils.substringAfterLast(originalFilename, "."));
+
             if (fileService.insert(f) == 1) {
                 file1 = f;
             } else {

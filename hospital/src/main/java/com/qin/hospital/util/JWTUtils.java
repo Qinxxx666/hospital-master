@@ -36,7 +36,6 @@ public class JWTUtils {
                     .withClaim("userName", userName) // 插入数据
                     .withClaim("userId", userId)
                     .sign(algorithm);
-            
         } catch (JWTCreationException e) {
             log.error(e);
             //如果Claim不能转换为JSON，或者在签名过程中使用的密钥无效，那么将会抛出JWTCreationException异常。
@@ -50,4 +49,5 @@ public class JWTUtils {
     public static DecodedJWT verify(String token) {
         return JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
     }
+
 }

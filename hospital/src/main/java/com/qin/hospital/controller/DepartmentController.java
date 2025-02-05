@@ -1,6 +1,5 @@
 package com.qin.hospital.controller;
 
-import com.qin.hospital.VO.*;
 import com.qin.hospital.entity.Department;
 import com.qin.hospital.entity.DepartmentUser;
 import com.qin.hospital.entity.User;
@@ -9,6 +8,7 @@ import com.qin.hospital.service.DepartmentUserService;
 import com.qin.hospital.service.UserService;
 import com.qin.hospital.util.MinioUtils;
 import com.qin.hospital.util.RestResponse;
+import com.qin.hospital.vo.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -33,18 +32,17 @@ public class DepartmentController {
     DepartmentService departmentService;
 
     @GetMapping("/list")
-    public RestResponse<List<DepartmentTreeVO>> getDepartmentList() {
+    public RestResponse<List<com.qin.hospital.vo.DepartmentTreeVO>> getDepartmentList() {
         //顶级节点
         List<Department> departments = departmentService.getNoneParentDepartmentList();
-        List<DepartmentTreeVO> departmentTreeVoList = new ArrayList<>();
+        List<com.qin.hospital.vo.DepartmentTreeVO> departmentTreeVoList = new ArrayList<>();
         for (Department department : departments) {
-            DepartmentTreeVO treeVo = new DepartmentTreeVO();
+            com.qin.hospital.vo.DepartmentTreeVO treeVo = new com.qin.hospital.vo.DepartmentTreeVO();
             treeVo.setLabel(department.getName());
             treeVo.setValue(department.getId().toString());
             getChildren(department, treeVo);
             departmentTreeVoList.add(treeVo);
         }
-
         return RestResponse.success(departmentTreeVoList);
     }
 
@@ -55,7 +53,7 @@ public class DepartmentController {
     RedisTemplate<String, Object> redisTemplate;
 
     @GetMapping("/info/{id}")
-    public RestResponse<DepartmentInfoVO> getDepartmentInfoById(@PathVariable Long id) {
+    public RestResponse<com.qin.hospital.vo.DepartmentInfoVO> getDepartmentInfoById(@PathVariable Long id) {
 //        if (Boolean.TRUE.equals(redisTemplate.hasKey(id.toString()))) {
 //            return RestResponse.success((DepartmentInfoVO) redisTemplate.opsForValue().get(id.toString()));
 //        }

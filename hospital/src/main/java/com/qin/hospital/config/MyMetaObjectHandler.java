@@ -21,4 +21,5 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         this.setFieldValByName("modifiedAt", LocalDateTime.now(), metaObject);
     }
+
 }

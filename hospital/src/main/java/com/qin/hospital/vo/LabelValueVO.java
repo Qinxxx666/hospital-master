@@ -1,4 +1,4 @@
-package com.qin.hospital.VO;
+package com.qin.hospital.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package com.qin.hospital.service.impl;
 
-import com.qin.hospital.VO.UserFormVO;
 import com.qin.hospital.entity.User;
 import com.qin.hospital.mapper.UserMapper;
 import com.qin.hospital.service.UserService;

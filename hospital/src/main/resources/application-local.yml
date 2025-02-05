@@ -1,0 +1,37 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://150.158.98.221:3307/hospital
+    username: root
+    password: 8ik,9ol.
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 2
+      max-active: 10
+      min-idle: 1
+      max-wait: 2000
+  redis:
+    host: ENC(L5SBgctsckKudFCYXk2vkw4iz6uCID9g)
+    port: 6379
+    password: ENC(qFtCIaeCzGtXof+WU9Sgx8zwFcE/PuEL)
+    lettuce:
+      pool:
+        max-idle: 16
+        max-active: 32
+        min-idle: 8
+
+jasypt:
+  encryptor:
+    password: Angel
+    algorithm: PBEWithMD5AndDES
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.qin.hospital.entity

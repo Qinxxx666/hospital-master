@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author WanYue
  */
 @Component
-
 public class WebRequestInterception implements HandlerInterceptor {
 
     @Autowired

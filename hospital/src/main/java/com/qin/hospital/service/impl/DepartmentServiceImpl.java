@@ -30,7 +30,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentById(Long id) {
-
         return departmentMapper.selectById(id);
     }
 
